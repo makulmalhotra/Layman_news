@@ -10,7 +10,8 @@ Layman is an iOS news app that fetches real-time articles and rewrites them in s
 
 | Welcome | Home | Article Detail | Ask Layman |
 |---|---|---|---|
-| _add screenshot_ | _add screenshot_ | _add screenshot_ | _add screenshot_ |
+| _add screensho<img width="393" height="864" alt="Screenshot 2026-04-06 at 12 56 53 PM" src="https://github.com/user-attachments/assets/65543864-c82d-4279-82bd-c52aa233ea6f" />
+t_ | _add screenshot_ | _add screenshot_ | _add screenshot_ |
 
 | Saved | Profile | Dark Mode |  |
 |---|---|---|---|
