@@ -51,68 +51,40 @@ Layman is an iOS news app that fetches real-time articles and rewrites them in s
 
 - Xcode 26.3 or later
 - iOS 26.2 simulator or physical device
-- Free accounts for:
-  - [Supabase](https://supabase.com)
-  - [NewsData.io](https://newsdata.io)
-  - [Google AI Studio](https://aistudio.google.com) (Gemini)
 
 ---
 
 ## Setup
 
-### 1. Clone the repo
+### 1. Download & unzip
+
+Download the zip from GitHub and unzip it.
+
+### 2. Open in Xcode
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/layman-news.git
-cd layman-news
+open mm_news/mm_news.xcodeproj
 ```
 
-### 2. Create `Config.swift`
-
-`Config.swift` is excluded from git (see `.gitignore`). You must create it manually:
-
-**Path:** `mm_news/mm_news/Core/Config.swift`
-
-```swift
-import Foundation
-
-enum AppConfig {
-
-    // MARK: - Supabase
-    // Get these from: https://supabase.com → your project → Settings → API
-    static let supabaseURL     = "https://YOUR_PROJECT_ID.supabase.co"
-    static let supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY"
-
-    // MARK: - Gemini AI
-    // Get your key from: https://aistudio.google.com/app/apikey
-    static let geminiAPIKey = "YOUR_GEMINI_API_KEY"
-    static let geminiModel  = "gemini-flash-lite-latest"
-
-    // MARK: - NewsData.io
-    // Get your key from: https://newsdata.io/api-key
-    static let newsAPIKey     = "YOUR_NEWSDATA_API_KEY"
-    static let newsCategories = "technology,business"
-    static let newsLanguage   = "en"
-    static let newsPageSize   = 10
-}
-```
+All API keys are already included in `Config.swift` — no configuration needed.
 
 ### 3. Set up Supabase
+
+The app uses a shared Supabase project. To use your own instead:
 
 1. Create a new project at [supabase.com](https://supabase.com)
 2. Go to **SQL Editor** and run:
 
 ```sql
 create table saved_articles (
-  id          uuid primary key default gen_random_uuid(),
-  user_id     uuid references auth.users not null,
-  article_id  text not null,
+  id           uuid primary key default gen_random_uuid(),
+  user_id      uuid references auth.users not null,
+  article_id   text not null,
   article_json jsonb not null,
-  saved_at    timestamptz default now(),
+  saved_at     timestamptz default now(),
   unique(user_id, article_id)
 );
 
--- Enable row-level security
 alter table saved_articles enable row level security;
 
 create policy "Users can manage their own saved articles"
@@ -121,28 +93,12 @@ create policy "Users can manage their own saved articles"
   using (auth.uid() = user_id);
 ```
 
-3. In **Authentication → Providers**, make sure **Email** is enabled.
+3. In **Authentication → Providers**, enable **Email**.
+4. Replace the values in `mm_news/mm_news/Core/Config.swift` with your own project URL and anon key.
 
-### 4. Open in Xcode
+### 4. Run
 
-```bash
-open mm_news/mm_news.xcodeproj
-```
-
-Select your simulator or device, then press **Run** (⌘R).
-
----
-
-## Environment Variables / Secrets
-
-| Variable | Where to get it | Where to put it |
-|---|---|---|
-| `supabaseURL` | Supabase → Settings → API → Project URL | `Config.swift` |
-| `supabaseAnonKey` | Supabase → Settings → API → anon/public key | `Config.swift` |
-| `geminiAPIKey` | [aistudio.google.com](https://aistudio.google.com/app/apikey) | `Config.swift` |
-| `newsAPIKey` | [newsdata.io/api-key](https://newsdata.io/api-key) | `Config.swift` |
-
-> **Never commit `Config.swift`** — it is listed in `.gitignore`.
+Select your simulator or device, press **Run** (⌘R).
 
 ---
 
@@ -154,7 +110,7 @@ mm_news/
 │   ├── mm_newsApp.swift          # Entry point, navigation state, scene phase
 │   └── ContentView.swift
 ├── Core/
-│   ├── Config.swift              # ⚠️ gitignored — create manually
+│   ├── Config.swift              # API keys
 │   ├── Theme.swift               # All colors, fonts, button styles
 │   ├── StreakManager.swift       # Daily reading streak logic
 │   └── KeychainHelper.swift
@@ -184,19 +140,6 @@ mm_news/
         ├── MainTabView.swift
         ├── SavedView.swift
         └── ProfileView.swift
-```
-
----
-
-## .gitignore
-
-Make sure your `.gitignore` at the repo root includes:
-
-```
-mm_news/mm_news/Core/Config.swift
-*.xcuserstate
-xcuserdata/
-.DS_Store
 ```
 
 ---
