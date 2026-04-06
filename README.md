@@ -15,9 +15,7 @@ Layman is an iOS news app that fetches real-time articles and rewrites them in s
 
 | Saved | Profile | Dark Mode |  |
 |---|---|---|---|
-| <img width="391" height="859" alt="Screenshot 2026-04-06 at 12 59 28 PM" src="https://github.com/user-attachments/assets/91e50720-34d9-45cc-8792-6d2fee287029" />
-| <img width="402" height="861" alt="Screenshot 2026-04-06 at 12 59 51 PM" src="https://github.com/user-attachments/assets/f627b6f7-6bd6-4b89-94fd-364463502320" />
- | <img width="397" height="862" alt="Screenshot 2026-04-06 at 1 00 17 PM" src="https://github.com/user-attachments/assets/940dae43-ed85-4938-bfe3-a7766793119b" />
+| <img width="391" height="859" alt="Screenshot 2026-04-06 at 12 59 28 PM" src="https://github.com/user-attachments/assets/91e50720-34d9-45cc-8792-6d2fee287029" />| <img width="402" height="861" alt="Screenshot 2026-04-06 at 12 59 51 PM" src="https://github.com/user-attachments/assets/f627b6f7-6bd6-4b89-94fd-364463502320" />| <img width="397" height="862" alt="Screenshot 2026-04-06 at 1 00 17 PM" src="https://github.com/user-attachments/assets/940dae43-ed85-4938-bfe3-a7766793119b" />
 | |
 
 ---
