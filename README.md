@@ -141,7 +141,7 @@ mm_news/
         ├── SavedView.swift
         └── ProfileView.swift
 ```
-
+claude.md file zipped in the project.
 ---
 
 ## License
