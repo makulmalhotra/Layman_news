@@ -22,15 +22,21 @@ Layman is an iOS news app that fetches real-time articles and rewrites them in s
 
 ## Features
 
-- **Live news feed** — Business, tech & startup articles via NewsData.io
+### Core
+- **Live news feed** — Real-time business, tech & startup articles via NewsData.io
 - **AI summaries** — Each article broken into 3 swipeable plain-language cards
-- **Ask Layman** — Chat with Gemini AI about any article
-- **Voice input** — Ask questions by voice in the AI chat
-- **Save & offline** — Bookmark articles; saved articles persist offline
-- **Reading streaks** — Daily streak tracking with longest-streak record
-- **Push notifications** — Daily digest reminder at 9 AM
-- **Dark mode** — Full adaptive dark/light theme with warm espresso palette
-- **Supabase auth** — Email/password sign-up and sign-in
+- **Ask Layman** — Chat with Gemini AI about any article; ask follow-up questions in plain English
+- **Save articles** — Bookmark any article for later reading
+- **Offline reading** — Saved articles are stored locally and available without internet
+- **Auth** — Email/password sign-up and sign-in via Supabase
+
+### Bonus Features
+- **Voice input** — Ask questions in the AI chat entirely by voice using on-device speech recognition (SFSpeechRecognizer + AVAudioEngine); mic button in the chat input bar activates live transcription
+- **Push notifications** — Daily digest reminder at 9 AM via local notifications; toggle on/off from the Profile screen
+- **Reading streaks** — Tracks how many consecutive days you've read an article; shows current streak and longest streak on the Profile screen with a 🔥 animation
+- **Real-time sync** — Saved articles sync automatically when the app returns to the foreground
+- **Dark mode** — Full adaptive dark/light theme with a warm espresso palette; every screen supports dark mode including Welcome, Auth, Home, Article Detail, and Ask Layman
+- **Haptic feedback** — Haptics on every meaningful interaction (bookmarks, send, tab switches, swipe completion)
 
 ---
 
@@ -43,9 +49,10 @@ Layman is an iOS news app that fetches real-time articles and rewrites them in s
 | Architecture | MVVM — `@Observable` ViewModels |
 | Auth & DB | Supabase (email/password + `saved_articles` table) |
 | News API | NewsData.io (free tier) |
-| AI | Google Gemini Flash Lite (`gemini-flash-lite-latest`) |
-| Voice | SFSpeechRecognizer + AVAudioEngine |
+| AI | Google Gemini (`gemini-flash-lite-latest`) |
+| Voice input | SFSpeechRecognizer + AVAudioEngine |
 | Notifications | UNUserNotificationCenter (local) |
+| Streaks | UserDefaults |
 
 ---
 
@@ -56,25 +63,28 @@ Layman is an iOS news app that fetches real-time articles and rewrites them in s
 
 ---
 
-## Setup
+## ⚠️ Before You Run — Required API Keys
 
-### 1. Download & unzip
+This project requires API keys that you must supply yourself. The app will not work without them.
 
-Download the zip from GitHub and unzip it.
+### 1. Gemini API Key (for Ask Layman AI chat) — Required
 
-### 2. Open in Xcode
-
-```bash
-open mm_news/mm_news.xcodeproj
+1. Go to [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
+2. Sign in with a Google account
+3. Click **Create API key** → **Create in new project**
+4. Copy the key
+5. Open `mm_news/mm_news/Core/Config.swift` and replace:
+```swift
+static let geminiAPIKey = "YOUR_GEMINI_API_KEY"
 ```
 
-All API keys are already included in `Config.swift` — no configuration needed.
+---
 
-### 3. Set up Supabase
+### 2. Supabase — Optional (use your own instance)
 
-The app uses a shared Supabase project. To use your own instead:
+The project ships with a shared Supabase instance for auth and saved articles. It works out of the box, but if you want your own isolated database:
 
-1. Create a new project at [supabase.com](https://supabase.com)
+1. Create a free project at [supabase.com](https://supabase.com)
 2. Go to **SQL Editor** and run:
 
 ```sql
@@ -96,11 +106,36 @@ create policy "Users can manage their own saved articles"
 ```
 
 3. In **Authentication → Providers**, enable **Email**.
-4. Replace the values in `mm_news/mm_news/Core/Config.swift` with your own project URL and anon key.
+4. Go to **Settings → API**, copy your **Project URL** and **anon/public key**
+5. Replace in `Config.swift`:
+```swift
+static let supabaseURL     = "https://YOUR_PROJECT_ID.supabase.co"
+static let supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY"
+```
+
+---
+
+## Setup
+
+### 1. Download & unzip
+
+Download the zip from GitHub and unzip it.
+
+### 2. Add your Gemini API key
+
+Follow the steps above — this is required for the AI chat to work.
+
+### 3. Open in Xcode
+
+```bash
+open mm_news/mm_news.xcodeproj
+```
 
 ### 4. Run
 
 Select your simulator or device, press **Run** (⌘R).
+
+> **Note:** Voice input and push notifications require a **physical device** — they do not work on the iOS simulator.
 
 ---
 
@@ -112,9 +147,9 @@ mm_news/
 │   ├── mm_newsApp.swift          # Entry point, navigation state, scene phase
 │   └── ContentView.swift
 ├── Core/
-│   ├── Config.swift              # API keys
+│   ├── Config.swift              # ⚠️ Add your API keys here
 │   ├── Theme.swift               # All colors, fonts, button styles
-│   ├── StreakManager.swift       # Daily reading streak logic
+│   ├── StreakManager.swift       # Daily reading streak logic (UserDefaults)
 │   └── KeychainHelper.swift
 ├── Models/
 │   ├── Models.swift              # Article, SavedArticle
@@ -124,11 +159,11 @@ mm_news/
 │   ├── HomeViewModel.swift
 │   └── AskLaymanViewModel.swift
 ├── Services/
-│   ├── SupabaseService.swift     # Auth + saved articles
+│   ├── SupabaseService.swift     # Auth + saved articles sync
 │   ├── NewsService.swift         # NewsData.io fetching
-│   ├── GeminiService.swift       # AI chat + suggestions
-│   ├── SpeechService.swift       # Voice input
-│   └── NotificationService.swift # Local push notifications
+│   ├── GeminiService.swift       # AI chat + question suggestions
+│   ├── SpeechService.swift       # Live voice transcription
+│   └── NotificationService.swift # Local push notifications scheduler
 └── Views/
     ├── Welcome/WelcomeView.swift
     ├── Auth/AuthView.swift
@@ -143,7 +178,7 @@ mm_news/
         ├── SavedView.swift
         └── ProfileView.swift
 ```
-claude.md file zipped in the project.
+
 ---
 
 ## License
