@@ -10,10 +10,7 @@ Layman is an iOS news app that fetches real-time articles and rewrites them in s
 
 | Welcome | Home | Article Detail | Ask Layman |
 |---|---|---|---|
-| <img width="393" height="864" alt="Screenshot 2026-04-06 at 12 56 53 PM" src="https://github.com/user-attachments/assets/65543864-c82d-4279-82bd-c52aa233ea6f" />
- | <img width="399" height="867" alt="Screenshot 2026-04-06 at 12 58 00 PM" src="https://github.com/user-attachments/assets/14aef3b8-9c31-429f-98a7-b346b813eba5" />
- | <img width="399" height="867" alt="Screenshot 2026-04-06 at 12 58 33 PM" src="https://github.com/user-attachments/assets/2619d76e-b600-4781-a090-2f4f764fb4fc" />
-| <img width="399" height="868" alt="Screenshot 2026-04-06 at 12 58 59 PM" src="https://github.com/user-attachments/assets/813ab9c2-7ae1-4553-9490-4eefffa7e532" />
+| <img width="393" height="864" alt="Screenshot 2026-04-06 at 12 56 53 PM" src="https://github.com/user-attachments/assets/65543864-c82d-4279-82bd-c52aa233ea6f" /> | <img width="399" height="867" alt="Screenshot 2026-04-06 at 12 58 00 PM" src="https://github.com/user-attachments/assets/14aef3b8-9c31-429f-98a7-b346b813eba5" />| <img width="399" height="867" alt="Screenshot 2026-04-06 at 12 58 33 PM" src="https://github.com/user-attachments/assets/2619d76e-b600-4781-a090-2f4f764fb4fc" />| <img width="399" height="868" alt="Screenshot 2026-04-06 at 12 58 59 PM" src="https://github.com/user-attachments/assets/813ab9c2-7ae1-4553-9490-4eefffa7e532" />
  |
 
 | Saved | Profile | Dark Mode |  |
