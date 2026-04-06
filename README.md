@@ -203,4 +203,4 @@ xcuserdata/
 
 ## License
 
-MIT
+GNU
